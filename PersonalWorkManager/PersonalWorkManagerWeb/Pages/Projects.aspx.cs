@@ -1,14 +1,16 @@
-﻿namespace PersonalWorkManagerWeb.Pages
+﻿using System;
+using System.Globalization;
+using System.Linq;
+using System.Web.Services;
+using Newtonsoft.Json;
+
+namespace PersonalWorkManagerWeb.Pages
 {
-
-    using System;
-    using System.Globalization;
-    using System.Linq;
-    using System.Web.Services;
-    using Newtonsoft.Json;
-
     public partial class Projects : System.Web.UI.Page
     {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+        }
 
 #region "Project"
         [WebMethod]
@@ -78,9 +80,7 @@
             DateTime? EndDateDT = null;
             StartDateDT = DateTime.ParseExact(StartDate, "dd-mm-yyyy", provider);
             if (EndDate.Length > 0)
-            {
                 EndDateDT = DateTime.ParseExact(EndDate, "dd-mm-yyyy", provider);
-            }
 
             Project project = new Project() { Code = Code, Name = Name, Description = Description, StartDate = StartDateDT, EndDate = EndDateDT, IdStatus = IdStatus };
             using (var objCtx = new PWMEntities())
@@ -100,9 +100,7 @@
             DateTime? EndDateDT = null;
             StartDateDT = DateTime.ParseExact(StartDate, "dd-mm-yyyy", provider);
             if (EndDate.Length > 0)
-            {
                 EndDateDT = DateTime.ParseExact(EndDate, "dd-mm-yyyy", provider);
-            }
 
             Project project;
             using (var objCtx = new PWMEntities())
@@ -156,11 +154,7 @@
             }
         }
 #endregion
-
-        protected void Page_Load(object sender, EventArgs e)
-        {
-        }
-
     }
+
 
 }

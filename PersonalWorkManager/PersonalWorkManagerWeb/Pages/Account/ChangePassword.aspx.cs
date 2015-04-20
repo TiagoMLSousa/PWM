@@ -1,13 +1,15 @@
-﻿namespace PersonalWorkManagerWeb
+﻿using System;
+using System.Linq;
+using System.Web.Services;
+using Newtonsoft.Json;
+
+namespace PersonalWorkManagerWeb
 {
-
-    using System;
-    using System.Linq;
-    using System.Web.Services;
-    using Newtonsoft.Json;
-
     public partial class ChangePassword : System.Web.UI.Page
     {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+        }
 
         [WebMethod]
         public static string ChangePasswordJSON(int Id, string OldPassword, string NewPassword)
@@ -18,23 +20,18 @@
                 var resource = objCtx.Resource.SingleOrDefault(x => x.Id == Id);
                 if (resource.Password != OldPassword)
                 {
-                    res.Result = false;
-                    res.Message = "A senha actual está incorrecta.";
+                    res.result = false;
+                    res.message = "A senha actual está incorrecta.";
                 }
                 else
                 {
                     resource.Password = NewPassword;
                     objCtx.SaveChanges();
-                    res.Result = true;
+                    res.result = true;
                 }
             }
-
             string json = JsonConvert.SerializeObject(res);
             return json;
-        }
-
-        protected void Page_Load(object sender, EventArgs e)
-        {
         }
 
     }
